@@ -231,7 +231,7 @@ function mainLoop() {
         if ((getPageSetting('BWraid') == true || getPageSetting('DailyBWraid') == true) && bwraidon) buyWeps();
         if (game.global.mapsActive && getPageSetting('game.global.universe == 1 && BWraid') == true && game.global.world == getPageSetting('BWraidingz') && getCurrentMapObject().level <= getPageSetting('BWraidingmax')) buyWeps();
 
-            //Golden
+        //Golden
         var agu = getPageSetting('AutoGoldenUpgrades');
         var dagu = getPageSetting('dAutoGoldenUpgrades');
         var cagu = getPageSetting('cAutoGoldenUpgrades');
@@ -246,13 +246,13 @@ function mainLoop() {
         //Offline Progress
         if (!usingRealTimeOffline) {
             RsetScienceNeeded();
-	    if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0))) {
+	        if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([11, 12, 21, 22].indexOf(questcheck()) >= 0))) {
                 RautoLevelEquipment();
-	    }
+	        }
         }
 
 	if (!(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([14, 24].indexOf(questcheck()) >= 0))) {
-            if (getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
+	    if (getPageSetting('RBuyUpgradesNew') != 0) RbuyUpgrades();
 	}
 
         //RCore
@@ -263,7 +263,7 @@ function mainLoop() {
         if (game.global.challengeActive == "Daily" && getPageSetting('buyradony') >= 1 && getDailyHeliumValue(countDailyWeight()) >= getPageSetting('buyradony') && game.global.b >= 100 && !game.singleRunBonuses.heliumy.owned) purchaseSingleRunBonus('heliumy');    
         
         //RBuildings
-	    
+
 	var smithybought = 0;
 	    
 	if (!usingRealTimeOffline && !(game.global.challengeActive == "Quest" && game.global.world > 5 && game.global.lastClearedCell < 90 && ([7, 10, 11, 12, 13, 20, 21, 22, 23].indexOf(questcheck()) >= 0))) {

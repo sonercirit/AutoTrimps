@@ -209,13 +209,21 @@ function buyBuildings() {
 	
 	    //Dynamic Gyms
         if (getPageSetting('DynamicGyms')) {
+            //Enemy stats
             var pierce = getPierceAmt() * (game.global.formation == 3 ? 2 : 1);
 	        var nextGym = game.upgrades.Gymystic.modifier + Math.max(0, game.upgrades.Gymystic.done-1)/100;
             var currentEnemyDamageOK = calcOurBlock(true) > nextGym * calcSpecificEnemyAttack();
             var zoneEnemyDamageOK = calcOurBlock(true) > calcEnemyAttack() * (1 - pierce);
+
+            //Challenge stats
+            var moreBlockThanHealth = calcOurBlock(true) >= calcOurHealth(true, true);
+            var crushedOK = game.global.dailyChallenge != "Crushed";
+            var explosiveOK = game.global.dailyChallenge != "Daily" || typeof game.global.dailyChallenge.explosive == "undefined";
+            //var critDailyOK = game.global.dailyChallenge != "Daily" || typeof game.global.dailyChallenge.crits == "undefined";
+            var challengeOK = moreBlockThanHealth || crushedOK && explosiveOK;
             
             //Stop buying Gyms if we already have enough block for our current enemy and also a C99 Snimp
-            if (!game.global.spireActive && currentEnemyDamageOK && zoneEnemyDamageOK) skipGym = true;
+            if (currentEnemyDamageOK && zoneEnemyDamageOK && challengeOK) skipGym = true;
 	    }
 	
 	    //Gym Wall
