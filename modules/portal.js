@@ -147,61 +147,51 @@ function c2runnerportal() {
 function c2runner() {
     if (!game.global.portalActive) return;
     if (getPageSetting('c2runnerstart') == true && getPageSetting('c2runnerportal') > 0 && getPageSetting('c2runnerpercent') > 0) {
-            if (game.global.highestLevelCleared > 34 && (100*(game.c2.Size/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Size");
-                debug("C2 Runner: Running C2 Challenge Size");
-            }
-            else if (game.global.highestLevelCleared > 129 && (100*(game.c2.Slow/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Slow");
-                debug("C2 Runner: Running C2 Challenge Slow");
-            }
-            else if (game.global.highestLevelCleared > 179 && (100*(game.c2.Watch/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Watch");
-                debug("C2 Runner: Running C2 Challenge Watch");
-            }
-            else if ((100*(game.c2.Discipline/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Discipline");
-                debug("C2 Runner: Running C2 Challenge Discipline");
-            }
-            else if (game.global.highestLevelCleared > 39 && (100*(game.c2.Balance/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Balance");
-                debug("C2 Runner: Running C2 Challenge Balance");
-            }
-            else if (game.global.highestLevelCleared > 44 && (100*(game.c2.Meditate/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Meditate");
-                debug("C2 Runner: Running C2 Challenge Meditate");
-            }
-            else if (game.global.highestLevelCleared > 24 && (100*(game.c2.Metal/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Metal");
-                debug("C2 Runner: Running C2 Challenge Metal");
-            }
-            else if (game.global.highestLevelCleared > 179 && (100*(game.c2.Lead/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Lead");
-                debug("C2 Runner: Running C2 Challenge Lead");
-            }
-            else if (game.global.highestLevelCleared > 144 && (100*(game.c2.Nom/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Nom");
-                debug("C2 Runner: Running C2 Challenge Nom");
-            }
-            else if ((100*(game.c2.Electricity/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Electricity");
-                debug("C2 Runner: Running C2 Challenge Electricity");
-            }
-            else if (game.global.highestLevelCleared > 164 && (100*(game.c2.Toxicity/(game.global.highestLevelCleared+1))) < getPageSetting('c2runnerpercent')) {
-                challengeSquaredMode = true;
-                selectChallenge("Toxicity");
-                debug("C2 Runner: Running C2 Challenge Toxicity");
-            }
+      if (game.global.highestLevelCleared > 34 && getIndividualSquaredReward("Size") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Size");
+        debug("C2 Runner: Running C2 Challenge Size");
+      } else if (game.global.highestLevelCleared > 129 && getIndividualSquaredReward("Slow") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Slow");
+        debug("C2 Runner: Running C2 Challenge Slow");
+      } else if (game.global.highestLevelCleared > 179 && getIndividualSquaredReward("Watch") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Watch");
+        debug("C2 Runner: Running C2 Challenge Watch");
+      } else if (getIndividualSquaredReward("Discipline") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Discipline");
+        debug("C2 Runner: Running C2 Challenge Discipline");
+      } else if (game.global.highestLevelCleared > 39 && getIndividualSquaredReward("Balance") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Balance");
+        debug("C2 Runner: Running C2 Challenge Balance");
+      } else if (game.global.highestLevelCleared > 44 && getIndividualSquaredReward("Meditate") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Meditate");
+        debug("C2 Runner: Running C2 Challenge Meditate");
+      } else if (game.global.highestLevelCleared > 24 && getIndividualSquaredReward("Metal") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Metal");
+        debug("C2 Runner: Running C2 Challenge Metal");
+      } else if (game.global.highestLevelCleared > 179 && getIndividualSquaredReward("Lead") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Lead");
+        debug("C2 Runner: Running C2 Challenge Lead");
+      } else if (game.global.highestLevelCleared > 144 && getIndividualSquaredReward("Nom") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Nom");
+        debug("C2 Runner: Running C2 Challenge Nom");
+      } else if (getIndividualSquaredReward("Electricity") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Electricity");
+        debug("C2 Runner: Running C2 Challenge Electricity");
+      } else if (game.global.highestLevelCleared > 164 && getIndividualSquaredReward("Toxicity") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Toxicity");
+        debug("C2 Runner: Running C2 Challenge Toxicity");
+      }
     }
 }
 
@@ -490,7 +480,7 @@ function RdoPortal(challenge) {
 	    buyPortalUpgrade('Looting');
 	    debug('Second Stage: Bought Max Looting');
 	}
-	
+
     }
     pushData();
     activatePortal();
@@ -502,18 +492,18 @@ function isNextU1DailyWind() {
     var currWindCost = game.empowerments.Wind.nextUberCost;
     var windCostChange = Math.max(currWindCost*.33,50);
     var nextWindCost = currWindCost - (windCostChange < 100 ? windCostChange : 100);
-    
+
     var currPoisonCost = game.empowerments.Poison.nextUberCost;
     var poisonCostChange = Math.max(currPoisonCost*.33,50);
     var nextPoisonCost = currPoisonCost - (poisonCostChange < 100 ? poisonCostChange : 100);
-        
+
     var currIceCost = game.empowerments.Ice.nextUberCost;
     var iceCostChange = Math.max(currIceCost*.33,50);
     var nextIceCost = currIceCost - (iceCostChange < 100 ? iceCostChange : 100);
-        
+
     var dnature = "None";
     var dailynature = [], dpoison, dpoisondiff, dwind, dwinddiff, dice, dicediff;
-        
+
         if (getPageSetting('pdailyenlightthresh') >= 0) {
 	    dpoison = (nextPoisonCost <= getPageSetting('pdailyenlightthresh') && nextPoisonCost <= game.empowerments.Poison.tokens);
 	    if (dpoison) {
