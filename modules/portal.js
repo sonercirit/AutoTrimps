@@ -137,8 +137,8 @@ function c2runnerportal() {
   if (getIndividualSquaredReward(game.global.challengeActive, game.global.world) >= getPageSetting('c2runnerpercent')) {
     if (game.global.runningChallengeSquared)
       abandonChallenge();
-    if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
-      doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
+    if (getPageSetting("AutoPortal") !== 'None')
+      doPortal(getPageSetting("AutoPortal"));
     else
       doPortal();
   }
