@@ -134,14 +134,14 @@ function dailyAutoPortal() {
 }
 
 function c2runnerportal() {
-    if (game.global.world >= getPageSetting('c2runnerportal')) {
-        if (game.global.runningChallengeSquared)
-            abandonChallenge();
-        if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
-            doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
-        else
-            doPortal();
-    }
+  if (getIndividualSquaredReward(game.global.challengeActive, game.global.world) >= getPageSetting('c2runnerpercent')) {
+    if (game.global.runningChallengeSquared)
+      abandonChallenge();
+    if (autoTrimpSettings.HeliumHourChallenge.selected != 'None')
+      doPortal(autoTrimpSettings.HeliumHourChallenge.selected);
+    else
+      doPortal();
+  }
 }
 
 function c2runner() {
