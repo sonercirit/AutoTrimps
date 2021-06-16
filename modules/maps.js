@@ -187,7 +187,9 @@ function getMapHealthCutOff(pure) {
 
 function getMapCutOff(pure) {
     //Init
-    var cut = getPageSetting("mapcuntoff");
+    let cut = getPageSetting("mapcuntoff");
+    // divide map cut off by 4 if dominance is not available
+    if (!game.upgrades.Dominance.done) cut /= 4;
     var mapology = game.global.challengeActive == "Mapology";
     var daily = game.global.challengeActive == "Daily";
     var c2 = game.global.runningChallengeSquared;
