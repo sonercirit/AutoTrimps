@@ -191,6 +191,14 @@ function c2runner() {
         challengeSquaredMode = true;
         selectChallenge("Toxicity");
         debug("C2 Runner: Running C2 Challenge Toxicity");
+      } else if (getIndividualSquaredReward("Trimp") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Trimp");
+        debug("C2 Runner: Running C2 Challenge Trimp");
+      } else if (getIndividualSquaredReward("Trapper") < getPageSetting('c2runnerpercent')) {
+        challengeSquaredMode = true;
+        selectChallenge("Trapper");
+        debug("C2 Runner: Running C2 Challenge Trapper");
       }
     }
 }
