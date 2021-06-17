@@ -96,7 +96,7 @@ var ATmessageLogTabVisible = true;
 var enableDebug = true;
 
 var autoTrimpSettings = {};
-var MODULES = {};
+var MODULES = customModules || {};
 var MODULESdefault = {};
 var ATMODULES = {};
 var ATmoduleList = [];
