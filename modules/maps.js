@@ -481,14 +481,14 @@ function autoMap() {
         shouldDoMaps = true;
 
     //Calculates Siphonology and Extra Map Levels
-    var minLvl = game.global.world - (shouldFarmLowerZone ?  11 : game.portal.Siphonology.level);
-    var maxLvl = game.global.world - (game.talents.mapLoot.purchased ?  1 : 0);
-    var siphLvl = minLvl;
+    var minLvl = game.global.world - (shouldFarmLowerZone ? 11 : game.portal.Siphonology.level);
+    var maxLvl = game.global.world - (game.talents.mapLoot.purchased ? 1 : 0);
+    var siphLvl = maxLvl;
 
     //If enabled, then
     if (getPageSetting('DynamicSiphonology') || shouldFarmLowerZone) {
         //For each Map Level we can go below our current zone...
-        for (siphLvl; siphLvl < maxLvl; siphLvl++) {
+        for (siphLvl; siphLvl >= minLvl; siphLvl--) {
             //Calc our Damage on this map
             var ratio = calcHDRatio(siphLvl, "map");
             // if (game.unlocks.imps.Titimp) ratio /= 2;
@@ -498,7 +498,7 @@ function autoMap() {
             else if (game.upgrades.Dominance.done) ratio /= 4;
 
             //Stop increasing map level once we get to the right ratio. We use 1.2 here because created maps are usually shorter and easier
-            if (ratio > 1.2) break;
+            if (ratio <= 1.2) break;
         }
 
         //Keep increasing map level while we can overkill in that map
