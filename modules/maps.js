@@ -485,12 +485,13 @@ function autoMap() {
     var maxLvl = game.global.world - (game.talents.mapLoot.purchased ? 1 : 0);
     var siphLvl = maxLvl;
 
+    let ratio;
     //If enabled, then
     if (getPageSetting('DynamicSiphonology') || shouldFarmLowerZone) {
         //For each Map Level we can go below our current zone...
         for (siphLvl; siphLvl >= minLvl; siphLvl--) {
             //Calc our Damage on this map
-            var ratio = calcHDRatio(siphLvl, "map");
+            ratio = calcHDRatio(siphLvl, "map");
             // if (game.unlocks.imps.Titimp) ratio /= 2;
 
             //Farms on Scryer if available, or Dominance, or just X
@@ -509,7 +510,7 @@ function autoMap() {
     }
 
     //Farms on "Oneshoot level" + 1, except on magma
-    var extraConditions = (shouldFarm || shouldFarmDamage || !enoughHealth || preSpireFarming);
+    var extraConditions = (shouldFarm || shouldFarmDamage || !enoughHealth || preSpireFarming) && ratio <= 1.2;
     if (extraConditions && game.global.challengeActive != "Coordinate" && !mutations.Magma.active() && siphLvl < maxLvl) siphLvl++;
 
     //Register the level of every regular map we have
