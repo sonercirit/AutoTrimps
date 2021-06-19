@@ -117,7 +117,6 @@ function canBuySpecialModifier(c, mapModifier, noLog) {
     const d = updateMapCost(1);
     const e = game.resources.fragments.owned;
 
-    // break if we can afford it
     if (d < e) return true;
 
     !noLog && console.log(`Could not afford ${mapSpecialModifierConfig[c.value].name}. Cost: ${d}. Have: ${e}`);
@@ -150,6 +149,8 @@ function testMapSpecialModController(noLog) {
                 if (mapModifierPriority.length > 0) {
                     for (const mapModifier of mapModifierPriority) {
                         success = canBuySpecialModifier(c, mapModifier, noLog);
+                        // break if we can afford it
+                        if (success) break;
                     }
                 }
                 // check for other conditions than farm
