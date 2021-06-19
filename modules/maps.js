@@ -142,21 +142,18 @@ function testMapSpecialModController(noLog) {
                     if (a.includes("smc")) mapModifierPriority.push("smc");
                     if (a.includes("lc")) mapModifierPriority.push("lc");
                 } else if (needPrestige && enoughDamage && a.includes("p")) {
-                    c.value = "p";
-                } else c.value = "fa";
+                    mapModifierPriority.push("p");
+                } else mapModifierPriority.push("fa");
+                // push no modifiers to list
+                mapModifierPriority.push("0");
 
                 //Check if we can afford it
-                if (mapModifierPriority.length > 0) {
-                    for (const mapModifier of mapModifierPriority) {
-                        success = canBuySpecialModifier(c, mapModifier, noLog);
-                        // break if we can afford it
-                        if (success) break;
-                    }
+                for (const mapModifier of mapModifierPriority) {
+                    success = canBuySpecialModifier(c, mapModifier, noLog);
+                    // break if we can afford it
+                    if (success) break;
                 }
-                // check for other conditions than farm
-                else if (c.value !== "0") {
-                    success = canBuySpecialModifier(c, c.value, noLog);
-                }
+            }
 
                 var d = updateMapCost(!0), e = game.resources.fragments.owned;
                 "0" !== c.value && !noLog && debug("Set the map special modifier to: " + mapSpecialModifierConfig[c.value].name + ". Cost: " + (100 * (d / e)).toFixed(2) + "% of your fragments.");
