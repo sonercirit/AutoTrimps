@@ -489,7 +489,7 @@ function autoMap() {
     //If enabled, then
     if (getPageSetting('DynamicSiphonology') || shouldFarmLowerZone) {
         //For each Map Level we can go below our current zone...
-        for (siphLvl; siphLvl >= minLvl; siphLvl--) {
+        for (siphLvl; siphLvl > minLvl; siphLvl--) {
             //Calc our Damage on this map
             ratio = calcHDRatio(siphLvl, "map");
             // if (game.unlocks.imps.Titimp) ratio /= 2;
