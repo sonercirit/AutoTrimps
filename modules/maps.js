@@ -11,7 +11,7 @@ MODULES.maps.MapTier3Sliders = [9,9,9,"Random"];
 MODULES.maps.preferGardens = !getPageSetting("PreferMetal");
 MODULES.maps.SpireFarm199Maps = true;
 MODULES.maps.shouldFarmCell = 80;
-MODULES.maps.SkipNumUnboughtPrestiges = 2;
+MODULES.maps.SkipNumUnboughtPrestiges = 12;
 MODULES.maps.UnearnedPrestigesRequired = 2;
 
 //Psycho
