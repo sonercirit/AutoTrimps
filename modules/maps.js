@@ -279,6 +279,8 @@ function autoMap() {
         return;
     }
 
+    MODULES.maps.numHitsSurvived = calcHDRatio();
+
     //No Mapology Credits HUD Update
     if (game.global.challengeActive == "Mapology" && game.challenges.Mapology.credits < 1) {
         vanillaMapatZone = false;
