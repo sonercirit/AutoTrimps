@@ -27,6 +27,9 @@ MODULES.maps.spireHD = 4; //4 is actually 1 hit in D stance
 MODULES.maps.spireHitsSurvived = 0.25; //1 is actually 8 hits+ using Heap. Set to something low to save nurseries past magma
 MODULES.maps.magmaHitsSurvived = 2; //Your geneticists are frequently lagging 1-2 zones behind when speeding through magma, which is why this is important
 
+// soner
+MODULES.maps.enableAutoVoid = true; // Enables setting void zone automatically
+
 var enoughDamage = true;
 var enoughHealth = true;
 var isFarming = false;
@@ -322,6 +325,13 @@ function autoMap() {
         if (game.global.selectedMapPreset >= 4) game.global.selectedMapPreset = 1;
         if (document.getElementById('advExtraLevelSelect').value > 0)
             document.getElementById('advExtraLevelSelect').value = "0";
+    }
+
+    // auto void
+    const voidRatio = calcHDRatio(game.global.world, "void");
+    if (MODULES.maps.enableAutoVoid && game.global.mapBonus === 10 && voidRatio >= 1) {
+        setPageSetting("VoidMaps", game.global.world);
+        debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
     }
 
     //Void Vars
