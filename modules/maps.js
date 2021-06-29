@@ -330,11 +330,13 @@ function autoMap() {
     // auto void
     if (MODULES.maps.enableAutoVoid) {
         const voidRatio = calcHDRatio(game.global.world, "void");
-        if (game.global.mapBonus === 10 && voidRatio >= 4) {
+
+        // do not run void maps until you reach half your HZE
+        if (game.global.world <= (game.global.highestLevelCleared / 2)) {
+            setPageSetting("VoidMaps", 0);
+        } else if (game.global.mapBonus === 10 && voidRatio >= 4 && getPageSetting("VoidMaps") === 0) {
             setPageSetting("VoidMaps", game.global.world);
             debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
-        } else {
-            setPageSetting("VoidMaps", 0);
         }
     }
 
