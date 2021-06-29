@@ -271,6 +271,11 @@ function getMapRatio(map, customLevel, customDiff) {
     return (customDiff ? customDiff : map.difficulty) * Math.max(mapDmg, mapHp);
 }
 
+function setVoidMap(voidRatio) {
+    setPageSetting("VoidMaps", game.global.world);
+    debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
+}
+
 function autoMap() {
     //Failsafes
     if (!game.global.mapsUnlocked || calcOurDmg() <= 0) {
@@ -330,13 +335,17 @@ function autoMap() {
     // auto void
     if (MODULES.maps.enableAutoVoid) {
         const voidRatio = calcHDRatio(game.global.world, "void");
+        const heliumThrough = game.global.challengeActive && game.challenges[game.global.challengeActive].heliumThrough;
 
         // do not run void maps until you reach half your HZE
         if (game.global.world <= (game.global.highestLevelCleared / 2)) {
             setPageSetting("VoidMaps", 0);
-        } else if (game.global.mapBonus === 10 && voidRatio >= 4 && getPageSetting("VoidMaps") === 0) {
-            setPageSetting("VoidMaps", game.global.world);
-            debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
+        } else if (getPageSetting("VoidMaps") === 0) {
+            if (game.global.mapBonus === 10 && voidRatio >= 4) {
+                setVoidMap(voidRatio);
+            } else if (heliumThrough === game.global.world) {
+                setVoidMap(voidRatio);
+            }
         }
     }
 
