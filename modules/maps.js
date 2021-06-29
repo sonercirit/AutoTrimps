@@ -330,7 +330,7 @@ function autoMap() {
     // auto void
     if (MODULES.maps.enableAutoVoid) {
         const voidRatio = calcHDRatio(game.global.world, "void");
-        if (game.global.mapBonus === 10 && voidRatio >= 1) {
+        if (game.global.mapBonus === 10 && voidRatio >= 4) {
             setPageSetting("VoidMaps", game.global.world);
             debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
         } else {
