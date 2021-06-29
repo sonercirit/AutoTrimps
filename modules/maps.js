@@ -328,10 +328,14 @@ function autoMap() {
     }
 
     // auto void
-    const voidRatio = calcHDRatio(game.global.world, "void");
-    if (MODULES.maps.enableAutoVoid && game.global.mapBonus === 10 && voidRatio >= 1) {
-        setPageSetting("VoidMaps", game.global.world);
-        debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
+    if (MODULES.maps.enableAutoVoid) {
+        const voidRatio = calcHDRatio(game.global.world, "void");
+        if (game.global.mapBonus === 10 && voidRatio >= 1) {
+            setPageSetting("VoidMaps", game.global.world);
+            debug(`Auto Void: Setting zone to ${game.global.world}. Ratio: ${voidRatio}`, "general", "*map");
+        } else {
+            setPageSetting("VoidMaps", 0);
+        }
     }
 
     //Void Vars
