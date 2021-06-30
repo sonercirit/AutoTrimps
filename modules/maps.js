@@ -122,7 +122,7 @@ function canBuySpecialModifier(c, mapModifier, noLog) {
 
     if (d < e) return true;
 
-    !noLog && console.log(`Could not afford ${mapSpecialModifierConfig[c.value].name}. Cost: ${d}. Have: ${e}`);
+    c.value !== "0" && !noLog && console.log(`Could not afford ${mapSpecialModifierConfig[c.value].name}. Cost: ${d}. Have: ${e}`);
     fragmentsNeeded = Math.max(fragmentsNeeded, d);
     return false;
 }
