@@ -407,12 +407,18 @@ function autoMap() {
     }
 
     //Prestige
-    // auto prestige if we can't overkill the zone
-    if (MODULES.maps.prestigeForOverkill && oneShotZone("D") < maxOneShotPower()) {
-        needPrestige = true;
-    } else if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ')) && !game.global.mapsActive) {
+
+    const getPrestiges = () => {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
+        return needPrestige
+    };
+
+    // auto prestige if we can't overkill the zone
+    if (MODULES.maps.prestigeForOverkill && oneShotZone("D") < maxOneShotPower()) {
+        needPrestige = getPrestiges();
+    } else if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ')) && !game.global.mapsActive) {
+        needPrestige = getPrestiges();
         //needPrestige = (offlineProgress.countMapItems(game.global.world) !== 0); TODO - Test this!
     } else
         needPrestige = prestige != "Off" && game.mapUnlocks[prestige] && game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5 && game.global.challengeActive != "Frugal";
