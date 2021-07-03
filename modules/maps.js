@@ -29,6 +29,7 @@ MODULES.maps.magmaHitsSurvived = 2; //Your geneticists are frequently lagging 1-
 
 // soner
 MODULES.maps.enableAutoVoid = true; // Enables setting void zone automatically
+MODULES.maps.autoVoidRatio = 16;
 
 var enoughDamage = true;
 var enoughHealth = true;
@@ -341,7 +342,7 @@ function autoMap() {
         if (game.global.world <= (game.global.highestLevelCleared / 2)) {
             setPageSetting("VoidMaps", 0);
         } else if (getPageSetting("VoidMaps") === 0) {
-            if (game.global.mapBonus === 10 && voidRatio >= 4) {
+            if (game.global.mapBonus === 10 && voidRatio >= MODULES.maps.autoVoidRatio) {
                 setVoidMap(voidRatio);
             } else if (heliumThrough === game.global.world) {
                 setVoidMap(voidRatio);
