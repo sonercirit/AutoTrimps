@@ -30,6 +30,7 @@ MODULES.maps.magmaHitsSurvived = 2; //Your geneticists are frequently lagging 1-
 // soner
 MODULES.maps.enableAutoVoid = true; // Enables setting void zone automatically
 MODULES.maps.autoVoidRatio = 16;
+MODULES.maps.prestigeForOverkill = true;
 
 var enoughDamage = true;
 var enoughHealth = true;
@@ -406,7 +407,10 @@ function autoMap() {
     }
 
     //Prestige
-    if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ')) && !game.global.mapsActive) {
+    // auto prestige if we can't overkill the zone
+    if (MODULES.maps.prestigeForOverkill && oneShotZone("S") < maxOneShotPower()) {
+        needPrestige = true;
+    } else if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ')) && !game.global.mapsActive) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
         needPrestige = prestigeList.some(prestige => game.mapUnlocks[prestige].last <= (game.global.world + extraMapLevels) - 5);
         //needPrestige = (offlineProgress.countMapItems(game.global.world) !== 0); TODO - Test this!
