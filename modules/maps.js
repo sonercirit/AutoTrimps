@@ -140,16 +140,16 @@ function testMapSpecialModController(noLog) {
             if (game.global.highestLevelCleared >= 59) {
                 //Select Map Modifier
                 const mapModifierPriority = [];
-                if (needPrestige && enoughDamage && a.includes("p")) {
-                    mapModifierPriority.push("p");
-                }
                 if (shouldFarm || shouldFarmDamage || !enoughHealth || preSpireFarming || (preVoidCheck && !enoughDamage)) {
                     if (a.includes("lmc")) mapModifierPriority.push("lmc");
-                    if (a.includes("hc")) mapModifierPriority.push("hc");
-                    if (a.includes("smc")) mapModifierPriority.push("smc");
-                    if (a.includes("lc")) mapModifierPriority.push("lc");
+                    else if (a.includes("hc")) mapModifierPriority.push("hc");
+                    else if (a.includes("smc")) mapModifierPriority.push("smc");
+                    else if (a.includes("lc")) mapModifierPriority.push("lc");
+                } else if (needPrestige && enoughDamage && a.includes("p")) {
+                    mapModifierPriority.push("p");
                 }
-                mapModifierPriority.push("fa");
+
+                // mapModifierPriority.push("fa");
                 // push no modifiers to list
                 mapModifierPriority.push("0");
 
