@@ -408,7 +408,7 @@ function autoMap() {
 
     //Prestige
     // auto prestige if we can't overkill the zone
-    if (MODULES.maps.prestigeForOverkill && oneShotZone("S") < maxOneShotPower()) {
+    if (MODULES.maps.prestigeForOverkill && oneShotZone("D") < maxOneShotPower()) {
         needPrestige = true;
     } else if ((getPageSetting('ForcePresZ') >= 0) && ((game.global.world + extraMapLevels) >= getPageSetting('ForcePresZ')) && !game.global.mapsActive) {
         const prestigeList = ['Supershield', 'Dagadder', 'Megamace', 'Polierarm', 'Axeidic', 'Greatersword', 'Harmbalest', 'Bootboost', 'Hellishmet', 'Pantastic', 'Smoldershoulder', 'Bestplate', 'GambesOP'];
