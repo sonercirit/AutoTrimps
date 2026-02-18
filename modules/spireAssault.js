@@ -35,7 +35,7 @@ function spireAssaultShouldRun(setting) {
 
 	if (setting.settingType === 'Clear Level') {
 		if (autoBattle.maxEnemyLevel > setting.world) return false;
-	} else if (setting.settingType === 'Buy One-Timer') {
+	} else if (setting.settingType === 'Buy One Timer') {
 		const oneTimer = autoBattle.oneTimers[setting.oneTimerItem];
 		if (!oneTimer || oneTimer.owned) return false;
 	} else {
@@ -98,7 +98,7 @@ function _runSpireAssault(setting) {
 				cost: autoBattle.getBonusCost,
 				upgradeFunction: autoBattle.buyBonus
 			},
-			'Buy One-Timer': {
+			'Buy One Timer': {
 				item: autoBattle.oneTimers[setting.oneTimerItem],
 				itemName: setting.oneTimerItem,
 				cost: autoBattle.oneTimerPrice,
@@ -114,7 +114,7 @@ function _runSpireAssault(setting) {
 		let resources = autoBattle[resourceType];
 		let levelCost = autoBattle.costFunction(itemName);
 
-		if (settingType === 'Buy One-Timer') {
+		if (settingType === 'Buy One Timer') {
 			if (resources >= levelCost) {
 				autoBattle.buyOneTimer(itemName);
 				return;
