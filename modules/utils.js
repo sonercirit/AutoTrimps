@@ -969,6 +969,48 @@ function getCurrentQuest() {
 	return otherIndex !== -1 ? otherIndex + 6 : 0;
 }
 
+function _getPerkBuyCount(perkName) {
+	const perk = game.portal[perkName];
+	if (!perk) return 0;
+
+	const noRespec = !game.global.canRespecPerks || (game.global.viewingUpgrades && !game.global.respecActive);
+	let heliumAvailable = noRespec ? game.resources.helium.respecMax : game.global.totalHeliumEarned;
+	heliumAvailable *= 0.001;
+
+	const perkLevels = noRespec ? getPerkLevel(perkName, true) + perk.levelTemp : 0;
+	const priceBase = perk.priceBase;
+	let toBuy = 0;
+
+	if (!perk.additive) {
+		const growth = perk.specialGrowth ? perk.specialGrowth : 1.3;
+		let toSpend = 0;
+		let nextLevel;
+
+		while (toBuy < 1000 && toSpend < heliumAvailable) {
+			if (toBuy > 1000) return 0;
+			nextLevel = perkLevels + toBuy;
+			toSpend += Math.ceil(nextLevel / 2 + priceBase * Math.pow(growth, nextLevel));
+			if (isNumberBad(toSpend)) return 1;
+			toBuy++;
+		}
+
+		toBuy--;
+	} else {
+		const increase = perk.additiveInc;
+		const nextPurchaseCost = priceBase + perkLevels * increase;
+		const A = increase / 2;
+		const B = nextPurchaseCost - A;
+		const C = heliumAvailable * -1;
+		const affordableLevels = (B * -1 + Math.sqrt(Math.pow(B, 2) - 4 * A * C)) / (2 * A);
+		toBuy = Math.floor(affordableLevels);
+	}
+
+	if (toBuy <= 0) toBuy = 0;
+	if (perk.max && toBuy > perk.max) toBuy = perk.max - perkLevels;
+
+	return toBuy;
+}
+
 function displayMostEfficientBuilding(forceUpdate = false) {
 	if (!atConfig.intervals.oneSecond && !forceUpdate) return;
 	if (!game.buildings.Hub.locked || !getPageSetting('buildingMostEfficientDisplay')) return;

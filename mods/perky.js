@@ -505,13 +505,13 @@ function optimize() {
 				const carp = Carpentry.bonus * Carpentry_II.bonus;
 				const territory = Trumps.bonus;
 				return 10 * (mod.taunt + territory * (mod.taunt - 1) * 111) * carp;
-		  }
+			}
 		: function () {
 				const carp = Carpentry.bonus * Carpentry_II.bonus;
 				const bonus = 3 + Math.log((base_housing * gem_income()) / Resourceful.bonus) / Math.log(1.4);
 				const territory = Trumps.bonus * zone;
 				return 10 * (base_housing * bonus + territory) * carp * mod.taunt + mod.dg * mod.scaff * carp;
-		  };
+			};
 
 	function income(ignore_prod) {
 		const storage = (mod.storage * Resourceful.bonus) / Packrat.bonus;
@@ -707,8 +707,15 @@ function optimize() {
 	weight.agility = (weight.helium + weight.attack) / 2;
 	weight.overkill = 0.25 * weight.attack * (2 - Math.pow(0.9, weight.helium / weight.attack));
 
-	if (zone > 90 && mod.soldiers <= 1 && Bait.min_level === 0) {
-		Bait.max_level = 0;
+	if (mod.soldiers <= 1 && Bait.min_level === 0) {
+		if (zone > 90) {
+			Bait.max_level = 0;
+		} else if (Bait.max_level === Infinity) {
+			const buyAmt = game.global.buyAmt;
+			game.global.buyAmt = 'Max';
+			Bait.min_level = _getPerkBuyCount('Bait');
+			game.global.buyAmt = buyAmt;
+		}
 	}
 
 	if (game.portal.Carpentry.locked) {
@@ -1780,7 +1787,10 @@ if (typeof clearPerksPerky !== 'function') {
 			for (let item in settingInputs.lockedPerks) {
 				if (settingInputs.lockedPerks[item]) {
 					settingInputs.lockedPerks[item] = false;
-					document.getElementById(`lock${item}`).classList = `icomoon icon-unlocked`;
+					const elem = document.getElementById(`lock${item}`);
+
+					elem.classList = `icomoon icon-unlocked`;
+					elem.style.color = '';
 					lockedPerks = true;
 				}
 			}
