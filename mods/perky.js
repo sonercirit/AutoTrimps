@@ -397,15 +397,17 @@ function populatePerkyData() {
 	return result;
 }
 
-function _getPerkBuyCount(perkName) {
-	const perk = game.portal[perkName];
-	if (!perk) return 0;
+function _getPerkBuyCount(perkObj, heliumModifier = 1) {
+	if (!perkObj) return Infinity;
+
+	const perk = game.portal[perkObj.name];
+	if (perkObj.fixed) return perkObj.fixedLevel;
 
 	const noRespec = !game.global.canRespecPerks || (game.global.viewingUpgrades && !game.global.respecActive);
 	let heliumAvailable = noRespec ? game.resources.helium.respecMax : game.global.totalHeliumEarned;
-	heliumAvailable *= 0.001;
+	heliumAvailable *= heliumModifier;
 
-	const perkLevels = noRespec ? getPerkLevel(perkName, true) + perk.levelTemp : 0;
+	const perkLevels = noRespec ? getPerkLevel(perkObj.name, true) + perk.levelTemp : 0;
 	const priceBase = perk.priceBase;
 	let toBuy = 0;
 
@@ -415,10 +417,10 @@ function _getPerkBuyCount(perkName) {
 		let nextLevel;
 
 		while (toBuy < 1000 && toSpend < heliumAvailable) {
-			if (toBuy > 1000) return 0;
+			if (toBuy > 1000) return perkObj.min_level;
 			nextLevel = perkLevels + toBuy;
 			toSpend += Math.ceil(nextLevel / 2 + priceBase * Math.pow(growth, nextLevel));
-			if (isNumberBad(toSpend)) return 1;
+			if (isNumberBad(toSpend)) return perkObj.min_level;
 			toBuy++;
 		}
 
@@ -435,6 +437,7 @@ function _getPerkBuyCount(perkName) {
 
 	if (toBuy <= 0) toBuy = 0;
 	if (perk.max && toBuy > perk.max) toBuy = perk.max - perkLevels;
+	if (perkObj.max && perkLevels + toBuy > perkObj.max) toBuy = perkObj.max - perkLevels;
 
 	return toBuy;
 }
@@ -749,14 +752,13 @@ function optimize() {
 	weight.agility = (weight.helium + weight.attack) / 2;
 	weight.overkill = 0.25 * weight.attack * (2 - Math.pow(0.9, weight.helium / weight.attack));
 
+	Agility.min_level = _getPerkBuyCount(Agility, 0.02);
+
 	if (mod.soldiers <= 1 && Bait.min_level === 0) {
 		if (zone > 90) {
 			Bait.max_level = 0;
 		} else if (Bait.max_level === Infinity) {
-			const buyAmt = game.global.buyAmt;
-			game.global.buyAmt = 'Max';
-			Bait.min_level = _getPerkBuyCount('Bait');
-			game.global.buyAmt = buyAmt;
+			Bait.min_level = _getPerkBuyCount(Bait, 0.001);
 		}
 	}
 
