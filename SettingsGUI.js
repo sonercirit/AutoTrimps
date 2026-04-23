@@ -4736,6 +4736,15 @@ function initialiseAllSettings() {
 				return description;
 			}, 'action', null, 'atData["performance"].enableAFKMode()', [1, 2]);
 
+		createSetting('equipEfficientEquipDisplay',
+			function () { return ('Highlight Efficient Equipment') },
+			function () {
+				let description = "<p>Will highlight the most efficient equipment or prestige to buy.</p>";
+				description += "<p><b>This setting will disable the default game setting.</b></p>";
+				description += "<p><b>Recommended:</b> On</p>";
+				return description;
+			}, 'boolean', false, null, [1, 2]);
+
 		createSetting('buildingMostEfficientDisplay',
 			function () { return ('Highlight Efficient Buildings') },
 			function () {

@@ -48,6 +48,7 @@ function populateFarmCalcData() {
 		trapper: noBreedChallenge(),
 		coordinate: challengeActive('Coordinate'),
 		crushed: challengeActive('Crushed'),
+		slow: challengeActive('Slow'),
 		nom: challengeActive('Nom'),
 		devastation: challengeActive('Devastation') || challengeActive('Revenge'),
 		domination: challengeActive('Domination'),
@@ -165,6 +166,7 @@ function populateFarmCalcData() {
 	let fastEnemy = challengesActive.desolation;
 	if (challengesActive.shieldBreak) fastEnemy = true;
 	else if (challengesActive.revenge) fastEnemy = true;
+	else if (challengesActive.slow) fastEnemy = true;
 	else if (challengesActive.trappapalooza) fastEnemy = true;
 	else if (challengesActive.archaeology) fastEnemy = true;
 	else if (challengesActive.berserk && game.challenges.Berserk.weakened !== 20) fastEnemy = true;
