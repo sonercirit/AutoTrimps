@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name		AutoTrimps-sonercirit
-// @version		1.1-sonercirit
+// @version		1.2-sonercirit
 // @namespace	https://sonercirit.github.io/AutoTrimps
 // @description	Automate all the trimps!
 // @author		zininzinin, spindrjr, Ishkaru, genBTC, Zeker0, SadAugust, sonercirit
 // @match		*://trimps.github.io/*
 // @match		*://kongregate.com/games/GreenSatellite/trimps/*
 // @match		*://trimpstest510.netlify.app/*
-// @connect		*://cdn.jsdelivr.net/*
-// @connect		*://api.github.com/*
-// @connect		*://trimps.github.io/*
+// @connect		cdn.jsdelivr.net
+// @connect		api.github.com
+// @connect		trimps.github.io
 // @connect		self
 // @grant		GM_xmlhttpRequest
 // @updateURL	https://github.com/sonercirit/AutoTrimps/raw/main/userFiles/AutoTrimps.user.js
