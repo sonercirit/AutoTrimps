@@ -20,6 +20,10 @@ This fork contains personal AutoTrimps changes on top of the SadAugust AutoTrimp
 -   Added **Max Zone** and **Max Cell** settings to stop buying Wormholes once that world cell is reached.
 -   Added **Coord Only** buying to buy Wormholes only when needed for Coordination.
 
+#### Userscript Loader
+
+-   Updated the userscript to resolve the latest `main` commit via GitHub API and load AutoTrimps from that pinned jsDelivr commit, avoiding stale `@main` CDN cache.
+
 ---
 
 # AutoTrimps - SadAugust Fork
