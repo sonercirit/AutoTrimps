@@ -1554,8 +1554,9 @@ function makeAutomapStatusTooltip(mouseover = false) {
 	const minLevelText = mapBonusMinLevel > 0 ? ` and your recommended ${autoLevelType} Auto Level map is above <i>${-mapBonusMinLevel - Math.abs(mapBonusLevel)}</i>` : '';
 
 	const mapStacksText = `Will run maps to get up to <i>${mapStacksValue}</i> Map Bonus stacks when World HD Ratio is greater than <i>${prettify(hdFarmValue)}</i>${minLevelText}.`;
-	const hdRatioText = 'HD Ratio is enemyHealth to yourDamage ratio, effectively hits to kill an enemy. The enemy health check is based on the highest health enemy in the map/zone.';
-	const hitsSurvivedText = `Hits Survived is the ratio of hits you can survive against the highest damaging enemy in the map/zone${game.global.universe === 1 ? ' (subtracts Trimp block from that value)' : ''}.`;
+	const worldHSHDCell = _getWorldHSHDCell();
+	const hdRatioText = `HD Ratio is enemyHealth to yourDamage ratio, effectively hits to kill an enemy. World values use the worst remaining enemy through cell ${worldHSHDCell}.`;
+	const hitsSurvivedText = `Hits Survived is the ratio of hits you can survive against the checked enemy${game.global.universe === 1 ? ' (subtracts Trimp block from that value)' : ''}. World values use the worst remaining enemy through cell ${worldHSHDCell}.`;
 	const hitsSurvived = prettify(hdStats.hitsSurvived);
 	const hitsSurvivedVoid = prettify(hdStats.hitsSurvivedVoid);
 	const hitsSurvivedSetting = targetHitsSurvived();
@@ -1573,7 +1574,7 @@ function makeAutomapStatusTooltip(mouseover = false) {
 		If you have the Auto Equality setting set to <b>Auto Equality: Advanced</b> then all calculations will factor expected equality value into them.<br>`;
 	}
 
-	tooltipText += `<br><b>Hits Survived info</b><br>${hitsSurvivedText}<br>Hits Survived: <b>${hitsSurvived}</b> / <i>${hitsSurvivedValue}</i><br>Void Hits Survived: <b>${hitsSurvivedVoid}</b><br>`;
+	tooltipText += `<br><b>Hits Survived info</b><br>${hitsSurvivedText}<br>Hits Survived (through cell ${worldHSHDCell}): <b>${hitsSurvived}</b> / <i>${hitsSurvivedValue}</i><br>Void Hits Survived: <b>${hitsSurvivedVoid}</b><br>`;
 
 	//Map Setting Info
 	tooltipText += `<br><b>Mapping info</b><br>`;
@@ -1598,7 +1599,7 @@ function makeAutomapStatusTooltip(mouseover = false) {
 
 	tooltipText += `<br><b>HD Ratio Info</b><br>`;
 	tooltipText += `${hdRatioText}<br>`;
-	tooltipText += `World HD Ratio ${stanceInfo}<b>${prettify(hdStats.hdRatio)}</b><br>`;
+	tooltipText += `World HD Ratio (through cell ${worldHSHDCell}) ${stanceInfo}<b>${prettify(hdStats.hdRatio)}</b><br>`;
 	tooltipText += `Map HD Ratio ${stanceInfo}<b>${prettify(hdStats.hdRatioMap)}</b><br>`;
 	tooltipText += `Void HD Ratio ${stanceInfoVoids}<b>${prettify(hdStats.hdRatioVoid * (voidStance ? 2 : 1))}</b><br>`;
 	tooltipText += `${mapStacksText}<br>`;

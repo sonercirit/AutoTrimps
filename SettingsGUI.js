@@ -1318,6 +1318,17 @@ function initialiseAllSettings() {
 				return description;
 			}, 'boolean', false, null, [1, 2]);
 
+		createSetting('worldHSHDCellInterval',
+			function () { return ('World HS/HD Cell Interval') },
+			function () {
+				let description = "<p>Controls the world cell interval used for <b>World HD Ratio</b> and <b>Hits Survived</b> calculations.</p>";
+				description += "<p>The script rounds your current world cell up to the next multiple of this value, then checks the worst remaining enemy through that cell. For example, with <b>10</b> it checks intervals ending at cells <b>10, 20, 30...</b>; at cell <b>5</b> it checks through cell <b>10</b>, and at cell <b>42</b> it checks through cell <b>50</b>.</p>";
+				description += "<p>Set this to <b>100</b> to use the end of the zone. Values below <b>1</b> default to <b>10</b>.</p>";
+				description += "<p>Liquified zones still use cell <b>1</b>, and Spires still use your <b>Exit After Cell</b> setting when set.</p>";
+				description += "<p><b>Recommended:</b> 10</p>";
+				return description;
+			}, 'value', 10, null, [1, 2]);
+
 		createSetting('hitsSurvived',
 			function () { return ('Hits Survived') },
 			function () {

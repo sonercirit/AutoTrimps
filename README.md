@@ -1,3 +1,20 @@
+# This Fork
+
+This fork contains personal AutoTrimps changes on top of the SadAugust AutoTrimps fork.
+
+## Fork Changelog
+
+### Unreleased
+
+-   Added configurable world HS/HD cell interval setting: **World HS/HD Cell Interval**.
+-   World HD Ratio now checks the worst remaining enemy health from the current world cell through the next configured interval cell.
+-   World Hits Survived now checks the worst remaining enemy attack from the current world cell through the next configured interval cell.
+-   Default interval is `10`, so checks end at cells `10, 20, 30, ...`.
+-   Liquified zones still use cell `1`; Spires still use **Exit After Cell**.
+-   Updated Auto Maps Status tooltip to show the world cell interval endpoint being used.
+
+---
+
 # AutoTrimps - SadAugust Fork
 
 SadAugust AutoTrimps Fork.
