@@ -15,7 +15,8 @@ function autoStructureDisplay(elem) {
 	tooltipText = "<p>Welcome to AT's Auto Structure Settings! <span id='autoTooltipHelpBtn' role='button' style='font-size: 0.6vw;' class='btn btn-md btn-info' onclick='toggleAutoTooltipHelp(); _verticalCenterTooltip(false, true);'>Help</span></p><div id='autoTooltipHelpDiv' style='display: none'>";
 	tooltipText += `${baseText}`;
 	if (game.global.universe === 1 && hze >= 230) tooltipText += `${nursery}`;
-	if (game.global.universe === 1 && hze >= 60) tooltipText += `${wormhole}${warpstation}`;
+	if (game.global.universe === 1 && hze >= 30) tooltipText += `${wormhole}`;
+	if (game.global.universe === 1 && hze >= 60) tooltipText += `${warpstation}`;
 	if (game.global.universe === 2) tooltipText += `${safeGateway}`;
 	tooltipText += `${settingOnPortal}`;
 	tooltipText += `</div>`;
