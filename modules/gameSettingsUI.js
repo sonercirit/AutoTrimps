@@ -7,6 +7,7 @@ function autoStructureDisplay(elem) {
 
 	For example, setting the <b>Percent</b> input to 10 and the <b>Up To</b> input to 50 for <b>House</b> will cause a House to be automatically purchased whenever the costs of the next house are less than 10% of your food, wood, and metal, as long as you have less than 50 houses.</p>`;
 	const nursery = "<p><b>Nursery:</b> Acts the same as the other settings but also has a 'From' input which will cause nurseries to only be built from that zone onwards. Spire nursery settings within AT will ignore this start zone if needed for them to work. If 'Advanced Nurseries' is enabled and 'Up To' is set to 0 it will override buying max available and instead respect the input.</p>";
+	const wormhole = '<p><b>Wormhole:</b> <b>Max Zone</b> and <b>Max Cell</b> stop wormhole purchases once that world cell has been reached. Set <b>Max Zone</b> to 0 to disable this limit. <b>Coord Only</b> only buys wormholes while a Coordination upgrade is available but you lack the trimps for it.</p>';
 	const warpstation = '<p><b>Warpstation:</b> Settings for this type of building can be found in the AutoTrimp settings building tab!</p>';
 	const safeGateway = '<p><b>Safe Gateway:</b> Reduces spending on Gateways to 0.1% when the cost of a perfect LMC (+<b>Map Level</b>) map multiplied by your <b>Map Count</b> input exceeds your current fragments, up to the zone specified in <b>Till Z</b>. If <b>Till Z</b> is 0, it assumes z999.</p>';
 	const settingOnPortal = "<p><b>Setting On Portal:</b> Will either automatically toggle this setting on, off, or won't change its current state when you portal.</p>";
@@ -14,7 +15,7 @@ function autoStructureDisplay(elem) {
 	tooltipText = "<p>Welcome to AT's Auto Structure Settings! <span id='autoTooltipHelpBtn' role='button' style='font-size: 0.6vw;' class='btn btn-md btn-info' onclick='toggleAutoTooltipHelp(); _verticalCenterTooltip(false, true);'>Help</span></p><div id='autoTooltipHelpDiv' style='display: none'>";
 	tooltipText += `${baseText}`;
 	if (game.global.universe === 1 && hze >= 230) tooltipText += `${nursery}`;
-	if (game.global.universe === 1 && hze >= 60) tooltipText += `${warpstation}`;
+	if (game.global.universe === 1 && hze >= 60) tooltipText += `${wormhole}${warpstation}`;
 	if (game.global.universe === 2) tooltipText += `${safeGateway}`;
 	tooltipText += `${settingOnPortal}`;
 	tooltipText += `</div>`;
@@ -44,7 +45,15 @@ function _autoStructureTable(settingGroup, hze) {
 
 	let rowData = '';
 	let rows = 0;
-	let total = 0;
+	let rowItems = 0;
+
+	const addStructureRow = () => {
+		if (!rowData) return;
+		tooltipText += `<div id='row${rows}' style= 'display: flex;'>${rowData}</div>`;
+		rowData = '';
+		rows++;
+		rowItems = 0;
+	};
 
 	for (let item in game.buildings) {
 		const building = game.buildings[item];
@@ -54,11 +63,8 @@ function _autoStructureTable(settingGroup, hze) {
 		if (item === 'Antenna' && game.buildings[item].locked) continue;
 		if (!building.AP && item !== 'Antenna') continue;
 
-		if ((total > 0 && total % 2 === 0) || item === 'Nursery') {
-			tooltipText += `<div id='row${rows}' style= 'display: flex;'>${rowData}</div>`;
-			rowData = '';
-			rows++;
-		}
+		const fullRow = item === 'Nursery' || item === 'Wormhole';
+		if (rowItems >= 2 || (fullRow && rowItems > 0)) addStructureRow();
 
 		const setting = settingGroup[item] !== 'undefined' ? settingGroup[item] : (setting = item = { enabled: false, percent: 100, buyMax: 0 });
 		const equipClass = setting && setting.enabled ? 'Equipped' : 'NotEquipped';
@@ -77,10 +83,37 @@ function _autoStructureTable(settingGroup, hze) {
 
 		rowData += `
 		<div id ='${item}BuyMaxDiv' style='display: flex; align-items: center; margin-bottom: 0.1em;'>
-			<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: ${item === 'Nursery' ? '0.4em' : '1.61vw;'}' onclick='document.getElementById("${item}BuyMax").focus()'>Up to:
+			<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: ${item === 'Nursery' || item === 'Wormhole' ? '0.4em' : '1.61vw;'}' onclick='document.getElementById("${item}BuyMax").focus()'>Up to:
 			<input id='${item}BuyMax' type='number' step='1' value='${setting && setting.buyMax ? setting.buyMax : 0}' min='0' max='99999' placeholder='0' style='color: white;' onfocus='this.select()'>
 			</span>
 		</div>`;
+
+		if (item === 'Wormhole') {
+			const maxZone = setting && setting.maxZone ? setting.maxZone : 0;
+			const maxCell = setting && setting.maxCell !== undefined ? setting.maxCell : 100;
+			const coordinationOnly = setting && setting.coordinationOnly ? " checked='checked'" : '';
+
+			rowData += `
+			<div id ='${item}MaxZoneDiv' style='display: flex; align-items: center; margin-bottom: 0.1em;'>
+				<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: 0.4em;' onclick='document.getElementById("${item}MaxZone").focus()'>Max Zone:
+				<input id='${item}MaxZone' type='number' step='1' value='${maxZone}' min='0' max='9999' placeholder='0' style='color: white;' onfocus='this.select()'>
+				</span>
+			</div>`;
+
+			rowData += `
+			<div id ='${item}MaxCellDiv' style='display: flex; align-items: center; margin-bottom: 0.1em;'>
+				<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: 0.4em;' onclick='document.getElementById("${item}MaxCell").focus()'>Max Cell:
+				<input id='${item}MaxCell' type='number' step='1' value='${maxCell}' min='1' max='100' placeholder='100' style='color: white;' onfocus='this.select()'>
+				</span>
+			</div>`;
+
+			rowData += `
+			<div id ='${item}CoordinationOnlyDiv' style='display: flex; align-items: center; margin-bottom: 0.1em;'>
+				<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: 1.61vw;' onclick='document.getElementById("${item}CoordinationOnly").click()'>Coord Only:
+				<input id='${item}CoordinationOnly' type='checkbox'${coordinationOnly} style='vertical-align: middle;' onclick='event.stopPropagation()'>
+				</span>
+			</div>`;
+		}
 
 		if (item === 'Nursery' && hze >= 230) {
 			rowData += `
@@ -91,10 +124,11 @@ function _autoStructureTable(settingGroup, hze) {
 			</div>`;
 		}
 
-		total++;
+		rowItems++;
+		if (fullRow) addStructureRow();
 	}
 
-	tooltipText += `<div id='row${rows + 1}' style= 'display: flex;'>${rowData}</div>`;
+	addStructureRow();
 	tooltipText += `</div>`;
 
 	tooltipText += `<div id='autoStructureMisc'>`;
@@ -199,6 +233,20 @@ function _autoStructureSave() {
 		buyMax = isNumberBad(buyMax) ? 0 : Math.max(Math.min(buyMax, 99999), 0);
 		setting[name].buyMax = buyMax;
 
+		if (name === 'Wormhole') {
+			const maxZoneElem = document.getElementById(name + 'MaxZone');
+			let maxZone = parseInt(maxZoneElem.value, 10);
+			maxZone = isNumberBad(maxZone) ? 0 : Math.max(Math.min(maxZone, 9999), 0);
+			setting[name].maxZone = maxZone;
+
+			const maxCellElem = document.getElementById(name + 'MaxCell');
+			let maxCell = parseInt(maxCellElem.value, 10);
+			maxCell = isNumberBad(maxCell) ? 100 : Math.max(Math.min(maxCell, 100), 1);
+			setting[name].maxCell = maxCell;
+
+			setting[name].coordinationOnly = document.getElementById(name + 'CoordinationOnly').checked;
+		}
+
 		if (name === 'Nursery') {
 			if (game.stats.highestLevel.valueTotal() < 230) {
 				setting[name].fromZ = 0;
@@ -242,7 +290,7 @@ function _autoStructureReset() {
 		House: { enabled: true, percent: 80, buyMax: 200 },
 		Mansion: { enabled: true, percent: 80, buyMax: 200 },
 		Hotel: { enabled: true, percent: 80, buyMax: 200 },
-		Wormhole: { enabled: false, percent: 1, buyMax: 1 },
+		Wormhole: { enabled: false, percent: 1, buyMax: 1, maxZone: 0, maxCell: 100, coordinationOnly: false },
 		Resort: { enabled: true, percent: 80, buyMax: 200 },
 		Gateway: { enabled: true, percent: 10, buyMax: 200 },
 		Collector: { enabled: true, percent: 100, buyMax: 0 },

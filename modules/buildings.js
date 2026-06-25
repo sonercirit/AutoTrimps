@@ -410,20 +410,51 @@ function _buyGyms(buildingSettings) {
 }
 
 /**
+ * Checks if wormhole purchases have reached the user defined max zone/cell.
+ */
+function _wormholeReachedMaxZone(wormholeSetting) {
+	const maxZone = parseInt(wormholeSetting.maxZone, 10);
+	if (!Number.isInteger(maxZone) || maxZone <= 0) return false;
+
+	const maxCellSetting = parseInt(wormholeSetting.maxCell, 10);
+	const maxCell = Number.isInteger(maxCellSetting) ? Math.max(Math.min(maxCellSetting, 100), 1) : 100;
+	const currentCell = Math.max(Math.min(game.global.lastClearedCell + 2, 100), 1);
+
+	return game.global.world > maxZone || (game.global.world === maxZone && currentCell >= maxCell);
+}
+
+/**
+ * Checks if another wormhole is currently needed to unlock the next Coordination purchase.
+ */
+function _wormholeNeededForCoordination() {
+	const coordination = game.upgrades.Coordination;
+	if (!coordination || coordination.allowed <= coordination.done) return false;
+	if (challengeActive('Trappapalooza')) return false;
+	if (typeof canAffordCoordinationTrimps !== 'function') return false;
+	if (canAffordCoordinationTrimps()) return false;
+	if (typeof trapperHoldCoords === 'function' && trapperHoldCoords()) return false;
+
+	return true;
+}
+
+/**
  * Buys wormholes if necessary. For the helium universe. Handled separately as it spends helium (danger).
  */
 function _buyWormholes(buildingSettings) {
-	if (game.buildings.Wormhole.locked || !buildingSettings.Wormhole || !buildingSettings.Wormhole.enabled) return;
+	const wormholeSetting = buildingSettings.Wormhole;
+	if (game.buildings.Wormhole.locked || !wormholeSetting || !wormholeSetting.enabled) return;
+	if (_wormholeReachedMaxZone(wormholeSetting)) return;
+	if (wormholeSetting.coordinationOnly && !_wormholeNeededForCoordination()) return;
 
-	const wormholeAmt = buildingSettings.Wormhole.buyMax === 0 ? Infinity : buildingSettings.Wormhole.buyMax;
-	const wormholePct = buildingSettings.Wormhole.percent / 100;
+	const wormholeAmt = wormholeSetting.buyMax === 0 ? Infinity : wormholeSetting.buyMax;
+	const wormholePct = wormholeSetting.percent / 100;
 	const purchased = game.buildings.Wormhole.purchased;
 	const max = wormholeAmt - purchased;
 
 	const wormholeCanAfford = calculateMaxAfford_AT(game.buildings.Wormhole, true, false, false, max, wormholePct);
 
 	if (wormholeAmt > purchased && wormholeCanAfford > 0) {
-		safeBuyBuilding('Wormhole', wormholeCanAfford);
+		safeBuyBuilding('Wormhole', wormholeSetting.coordinationOnly ? 1 : wormholeCanAfford);
 	}
 }
 

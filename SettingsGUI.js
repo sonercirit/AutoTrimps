@@ -5098,7 +5098,7 @@ function initialiseAllSettings() {
 				House: { enabled: true, percent: 80, buyMax: 200 },
 				Mansion: { enabled: true, percent: 80, buyMax: 200 },
 				Hotel: { enabled: true, percent: 80, buyMax: 200 },
-				Wormhole: { enabled: false, percent: 1, buyMax: 1 },
+				Wormhole: { enabled: false, percent: 1, buyMax: 1, maxZone: 0, maxCell: 100, coordinationOnly: false },
 				Resort: { enabled: true, percent: 80, buyMax: 200 },
 				Gateway: { enabled: true, percent: 10, buyMax: 200 },
 				Collector: { enabled: true, percent: 100, buyMax: 0 },
