@@ -7,7 +7,7 @@
 // @match		*://trimps.github.io/*
 // @match		*://kongregate.com/games/GreenSatellite/trimps/*
 // @match		*://trimpstest510.netlify.app/*
-// @connect		*://sonercirit.github.io/AutoTrimps/*
+// @connect		*://cdn.jsdelivr.net/*
 // @connect		*://trimps.github.io/*
 // @connect		self
 // @grant		GM_xmlhttpRequest
@@ -23,4 +23,4 @@ function loadScript(id, src) {
 
 offlineTimeSpeed = game.global.timeWarpLimit;
 game.global.timeWarpLimit = 0;
-loadScript('AutoTrimps-sonercirit', 'https://sonercirit.github.io/AutoTrimps/AutoTrimps2.js');
+loadScript('AutoTrimps-sonercirit', 'https://cdn.jsdelivr.net/gh/sonercirit/AutoTrimps@main/AutoTrimps2.js');
