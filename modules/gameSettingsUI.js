@@ -109,8 +109,8 @@ function _autoStructureTable(settingGroup, hze) {
 
 			rowData += `
 			<div id ='${item}CoordinationOnlyDiv' style='display: flex; align-items: center; margin-bottom: 0.1em;'>
-				<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: 1.61vw;' onclick='document.getElementById("${item}CoordinationOnly").click()'>Coord Only:
-				<input id='${item}CoordinationOnly' type='checkbox'${coordinationOnly} style='vertical-align: middle;' onclick='event.stopPropagation()'>
+				<span id='${item}TextBox' class='textbox' style='text-align: left; height: 1.5vw; max-width: 9vw; min-width: 9vw; font-size: 0.7vw; margin-right: 1.61vw; cursor: pointer;' onclick='document.getElementById("${item}CoordinationOnly").click()'>Coord Only:
+				<input id='${item}CoordinationOnly' type='checkbox'${coordinationOnly} style='appearance: auto; -webkit-appearance: checkbox; width: 0.9vw; height: 0.9vw; margin-left: 0.3em; vertical-align: middle; accent-color: #5cb85c; cursor: pointer; opacity: 1;' onclick='event.stopPropagation()'>
 				</span>
 			</div>`;
 		}
