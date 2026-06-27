@@ -10,6 +10,9 @@ function autoMapsStatus(get = false) {
 		status = mapSettings.status;
 	} else {
 		status = 'Advancing';
+		if (typeof hdStats.hitsSurvived === 'number' && typeof hdStats.hdRatio === 'number') {
+			status += `<br>World&nbsp;HS/HD:&nbsp;${prettify(hdStats.hitsSurvived)}&nbsp;/&nbsp;${prettify(hdStats.hdRatio)}`;
+		}
 	}
 
 	if (challengeActive('Mapology') && game.challenges.Mapology.credits < 1) status = `Out of Map Credits ${status}`;
