@@ -6,6 +6,11 @@ This fork contains personal AutoTrimps changes on top of the SadAugust AutoTrimp
 
 ### Unreleased
 
+#### Prestige Climb Order
+
+-   Added **PC: Order** to toggle Prestige Climb between **Equip First** and **Tier First**.
+-   Prestige Climb now applies the selected prestige order instead of always forcing **Equip First**.
+
 #### World HS/HD Cell Interval
 
 -   Added configurable world HS/HD cell interval setting: **World HS/HD Cell Interval**.

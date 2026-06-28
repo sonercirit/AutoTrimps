@@ -1366,7 +1366,9 @@ function prestigeClimb(lineCheck) {
 		resetMapVars();
 	}
 
-	if (game.options.menu.mapLoot.enabled !== 1) toggleSetting('mapLoot');
+	// game.options.menu.mapLoot uses 1 for Equip First and 0 for Tier First.
+	const desiredMapLootMode = getPageSetting('prestigeClimbOrder') === 1 ? 0 : 1;
+	if (game.options.menu.mapLoot.enabled !== desiredMapLootMode) toggleSetting('mapLoot');
 	const status = `Prestige Climb: ${prestigeToFarmFor} items remaining`;
 
 	const repeat = !(game.global.mapsActive && mapsToRun > (mapObject.bonus === 'p' && game.global.lastClearedMapCell !== mapObject.size - 2 ? 2 : 1));

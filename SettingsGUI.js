@@ -1413,7 +1413,7 @@ function initialiseAllSettings() {
 			function () { return ('Prestige Climb') },
 			function () {
 				let description = "<p>Acquire prestiges through the selected item (inclusive) as soon as they are available in maps.</p>";
-				description += "<p>Automatically swaps the games default setting from <b>Tier First</b> to <b>Equip First</b>.</p>";
+				description += "<p>The <b>PC: Order</b> setting controls whether this uses the game's <b>Equip First</b> or <b>Tier First</b> prestige order.</p>";
 				description += "<p><b>Auto Maps must be enabled for this to run.</b></p>";
 				description += "<p><b>Before Explorers have been unlocked when this setting runs it will automatically set all map sliders except size to the minimum they can be and the biome used to Random.</b></p>";
 				description += "<p>This is important for speed climbing through world zones. If you find the script getting stuck somewhere, particularly where you should easily be able to kill stuff, setting this to an option lower down in the list will help ensure you are more powerful at all times, but will spend more time acquiring the prestiges in maps.</p>";
@@ -1427,6 +1427,16 @@ function initialiseAllSettings() {
 				}
 				return equips;
 			}, [1, 2]);
+
+		createSetting('prestigeClimbOrder',
+			function () { return (['PC: Order: Equip First', 'PC: Order: Tier First']) },
+			function () {
+				let description = "<p>Controls which of the game's prestige order modes <b>Prestige Climb</b> will use while it is active.</p>";
+				description += "<p><b>PC: Order: Equip First</b><br>Sets the game's prestige order to <b>Equip First</b> for Prestige Climb.</p>";
+				description += "<p><b>PC: Order: Tier First</b><br>Sets the game's prestige order to <b>Tier First</b> for Prestige Climb.</p>";
+				description += "<p><b>Recommended:</b> PC: Order: Equip First</p>";
+				return description;
+			}, 'multitoggle', 0, null, [1, 2]);
 
 		createSetting('prestigeClimbZone',
 			function () { return ('PC: Force Prestige Z') },
