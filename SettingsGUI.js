@@ -1279,6 +1279,15 @@ function initialiseAllSettings() {
 				return description;
 			}, 'boolean', true, null, [1, 2]);
 
+		createSetting('trickyParadise',
+			function () { return ('Tricky Paradise') },
+			function () {
+				let description = "<p>When enabled, Auto Maps will run the starter <b>Tricky Paradise</b> map at <b>Zone 6</b> if it is available.</p>";
+				description += "<p>The script will run it once, then continue normally.</p>";
+				description += "<p><b>Recommended:</b> Off</p>";
+				return description;
+			}, 'boolean', false, null, [1]);
+
 		createSetting('autoMapsPriority',
 			function () { return ('Auto Maps Priority') },
 			function () {

@@ -255,6 +255,48 @@ function liquifiedZone() {
 	return game.global.gridArray && game.global.gridArray[0] && game.global.gridArray[0].name === 'Liquimp';
 }
 
+function trickyParadise(lineCheck) {
+	const mapName = 'Tricky Paradise';
+	const farmingDetails = {
+		shouldRun: false,
+		mapName
+	};
+
+	if (!getPageSetting('trickyParadise') || game.global.universe !== 1 || game.global.world !== 6) return farmingDetails;
+
+	const trickyMap = game.global.mapsOwnedArray.find((map) => map.name === mapName && map.level === 6);
+	const clears = trickyMap ? trickyMap.clears || 0 : 0;
+	const shouldMap = Boolean(trickyMap) && clears < 1;
+
+	if (lineCheck) return shouldMap ? { priority: -Infinity } : undefined;
+
+	const mapSpecial = trickyMap && trickyMap.bonus ? trickyMap.bonus : '0';
+	if (mapSettings.mapName === mapName && !shouldMap) {
+		mappingDetails(mapName, 0, mapSpecial);
+		resetMapVars();
+	}
+
+	if (!shouldMap) return farmingDetails;
+
+	const mapLevel = trickyMap.level - game.global.world;
+	const status = `${mapName}:<br>${clears}/1</div>`;
+
+	Object.assign(farmingDetails, {
+		shouldRun: true,
+		mapName,
+		mapId: trickyMap.id,
+		mapLevel,
+		special: mapSpecial,
+		biome: trickyMap.location,
+		autoLevel: false,
+		repeat: false,
+		status,
+		priority: -Infinity
+	});
+
+	return farmingDetails;
+}
+
 function _obtainUniqueMap(uniqueMap) {
 	const mapName = 'Unique Map Farm';
 	const farmingDetails = {
@@ -3396,7 +3438,7 @@ function farmingDecision() {
 	let mapTypes = [];
 
 	if (game.global.universe === 1) {
-		mapTypes = [mapDestacking, prestigeClimb, prestigeRaiding, bionicRaiding, mapFarm, voidMaps, mapBonus, hdFarm, experience, toxicity, _obtainUniqueMap];
+		mapTypes = [trickyParadise, mapDestacking, prestigeClimb, prestigeRaiding, bionicRaiding, mapFarm, voidMaps, mapBonus, hdFarm, experience, toxicity, _obtainUniqueMap];
 
 		if (challengeActive('Mapology') && getPageSetting('mapology') && getPageSetting('mapologyMapOverrides')) {
 			mapTypes = [prestigeClimb, prestigeRaiding, bionicRaiding, voidMaps, _obtainUniqueMap];

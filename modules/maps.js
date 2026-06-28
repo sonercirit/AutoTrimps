@@ -489,6 +489,7 @@ function _setSelectedMap(selectedMap, voidMap, optimalMap) {
 		if (voidMap) selectedMap = voidMap.id;
 		else if (mapSettings.mapName === 'Prestige Raiding') selectedMap = 'prestigeRaid';
 		else if (mapSettings.mapName === 'Bionic Raiding') selectedMap = 'bionicRaid';
+		else if (mapSettings.mapId) selectedMap = mapSettings.mapId;
 		else if (optimalMap) selectedMap = optimalMap.id;
 		else {
 			const mapBiome = mapSettings.biome !== undefined && mapSettings.biome !== 'Any' ? mapSettings.biome : getBiome();
@@ -541,7 +542,7 @@ function _setMapRepeat(mapObj = getCurrentMapObject()) {
 						repeatState = false;
 					}
 					/* if running optimal map level and we can get better slider rolls then recreate the map */
-				} else if (hdStats.autoLevelMaxFragments) {
+				} else if (hdStats.autoLevelMaxFragments && mapSettings.mapName !== 'Tricky Paradise') {
 					repeatState = !_rerollMapCreation(mapObj);
 				}
 			}
@@ -631,7 +632,7 @@ function _runSelectedMap(mapId, runUnique) {
 	_abandonMapCheck(mapId, runUnique);
 
 	const mapObj = game.global.mapsOwnedArray[getMapIndex(mapId)];
-	if (mapObj && !mapObj.noRecycle && !mapSettings.prestigeFragMapBought && mapSettings.mapName !== 'Prestige Raiding' && mapSettings.mapName !== 'Bionic Raiding') {
+	if (mapObj && !mapObj.noRecycle && !mapSettings.prestigeFragMapBought && mapSettings.mapName !== 'Prestige Raiding' && mapSettings.mapName !== 'Bionic Raiding' && mapSettings.mapName !== 'Tricky Paradise') {
 		const { mapLevel, special, biome = getBiome() } = mapSettings;
 
 		if (mapObj.level === mapSettings.mapLevel + game.global.world) {

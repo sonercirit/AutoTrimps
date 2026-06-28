@@ -6,6 +6,10 @@ This fork contains personal AutoTrimps changes on top of the SadAugust AutoTrimp
 
 ### Unreleased
 
+#### Tricky Paradise
+
+-   Added a **Tricky Paradise** Maps option to run the starter map once at Zone 6.
+
 #### Prestige Climb Order
 
 -   Added **PC: Order** to toggle Prestige Climb between **Equip First** and **Tier First**.

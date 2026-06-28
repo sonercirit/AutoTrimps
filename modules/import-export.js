@@ -1167,6 +1167,7 @@ function makeFarmingDecisionHelpTooltip() {
 	tooltipText += `<p>Mapping has a priority as to what it will try to run and in what order. This is a static list and can't be modified with the exception of challenge settings only allowing certain settings to be run.</p>`;
 	tooltipText += `<p>First it will check to see if you're running a setting and if you are then it will continue until that settings farming has been completed. Afterwards it will go through all of the settings (<b>challenge specific settings will only be shown when running that challenge</b>) in this order:</p>`;
 	if (game.global.universe === 1) {
+		if (getPageSetting('trickyParadise')) tooltipText += `<p><b>Tricky Paradise</b></p>`;
 		if (challengeActive('Balance')) tooltipText += `<p><b>Balance Destacking</b></p>`;
 		if (challengeActive('Daily')) tooltipText += `<p><b>Daily Bloodthirst Destacking</b></p>`;
 		if (!challengeActive('Frugal')) tooltipText += `<p><b>Prestige Climb</b></p>`;
