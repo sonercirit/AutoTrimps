@@ -15,6 +15,11 @@ This fork contains personal AutoTrimps changes on top of the SadAugust AutoTrimp
 -   Added **PC: Order** to toggle Prestige Climb between **Equip First** and **Tier First**.
 -   Prestige Climb now applies the selected prestige order instead of always forcing **Equip First**.
 
+#### Prestige Climb Skip
+
+-   Changed **PC: Prestige Skip** from a boolean to a toggle with **Off**, **2 Metal Upg**, and **1 Atk + 1 HP** modes.
+-   Added support for skipping Prestige Climb only when both an unbought metal attack prestige and an unbought metal health prestige are available.
+
 #### World HS/HD Cell Interval
 
 -   Added configurable world HS/HD cell interval setting: **World HS/HD Cell Interval**.

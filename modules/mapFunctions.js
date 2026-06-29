@@ -1389,7 +1389,9 @@ function prestigeClimb(lineCheck) {
 	mapSpecial = simulateMap.special;
 
 	let shouldMap = prestigeToFarmFor > 0;
-	if (shouldMap && getPageSetting('prestigeClimbSkip')) shouldMap = 2 > prestigesUnboughtCount();
+	const prestigeSkip = getPageSetting('prestigeClimbSkip');
+	if (shouldMap && prestigeSkip === 1) shouldMap = 2 > prestigesUnboughtCount();
+	if (shouldMap && prestigeSkip === 2) shouldMap = !prestigesUnboughtCount('attack') || !prestigesUnboughtCount('health');
 
 	const mapObject = getCurrentMapObject();
 	const worldMapCost = mapCost(mapLevel, mapSpecial, null, [0, 0, 0], false);

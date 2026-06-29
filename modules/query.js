@@ -200,9 +200,15 @@ function prestigesToGet(targetZone = game.global.world, targetPrestige = 'Gambes
 	return [prestigeToFarmFor, mapsToRun];
 }
 
-function prestigesUnboughtCount() {
+function prestigesUnboughtCount(prestigeType) {
 	const prestigeList = ['Dagadder', 'Bootboost', 'Megamace', 'Hellishmet', 'Polierarm', 'Pantastic', 'Axeidic', 'Smoldershoulder', 'Greatersword', 'Bestplate', 'Harmbalest', 'GambesOP'];
-	const numUnbought = prestigeList.filter((p) => game.upgrades[p].allowed - game.upgrades[p].done > 0).length;
+	const numUnbought = prestigeList.filter((p) => {
+		if (game.upgrades[p].allowed - game.upgrades[p].done <= 0) return false;
+		if (!prestigeType) return true;
+
+		const prestigeEquipment = atData.equipment && atData.equipment[game.upgrades[p].prestiges];
+		return prestigeEquipment && prestigeEquipment.resource === 'metal' && prestigeEquipment.stat === prestigeType;
+	}).length;
 
 	return numUnbought;
 }

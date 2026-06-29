@@ -1451,19 +1451,22 @@ function initialiseAllSettings() {
 			function () { return ('PC: Force Prestige Z') },
 			function () {
 				let description = "<p>On and after this zone is reached, always try to prestige for everything immediately regardless of your <b>Prestige Climb</b> input unless it is set to <b>Off</b>.</p>";
-				description += "<p>The <b>Prestige Skip</b> setting has the potential to disable this if it's enabled.</p>";
+				description += "<p>The <b>Prestige Skip</b> setting has the potential to disable this when it isn't set to <b>Off</b>.</p>";
 				description += "<p>Set to <b>0 or below</b> to disable this setting.</p>";
 				description += "<p><b>Recommended:</b> The zone you start heavily slowing down</p>";
 				return description;
 			}, 'value', -1, null, [1, 2]);
 
 		createSetting('prestigeClimbSkip',
-			function () { return ('PC: Prestige Skip') },
+			function () { return (['PC: Prestige Skip: Off', 'PC: Prestige Skip: 2 Metal Upg', 'PC: Prestige Skip: 1 Atk + 1 HP']) },
 			function () {
-				let description = "<p>Will stop <b>Prestige Climb</b> from running if you have 2 or more unbought metal prestiges in your upgrades window.</p>";
+				let description = "<p>Controls when <b>Prestige Climb</b> will stop running due to unbought metal prestiges in your upgrades window.</p>";
+				description += "<p><b>Off</b><br>Disables this setting.</p>";
+				description += "<p><b>2 Metal Upgrades</b><br>Stops Prestige Climb when you have 2 or more unbought metal prestiges.</p>";
+				description += "<p><b>1 Attack + 1 Health</b><br>Stops Prestige Climb when you have at least 1 unbought metal attack prestige and at least 1 unbought metal health prestige.</p>";
 				description += "<p><b>Recommended:</b> Off</p>";
 				return description;
-			}, 'boolean', false, null, [1, 2]);
+			}, 'multitoggle', 0, null, [1, 2]);
 
 		createSetting('prestigeClimbPriority',
 			function () { return ('PC: Priority') },
